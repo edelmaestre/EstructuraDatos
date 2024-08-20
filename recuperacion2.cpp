@@ -1,137 +1,180 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
-using namespace std;
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
+void Insertar();
+void Informe();
+void Eliminar();
+
+using namespace std;
+
+struct Nodo{
+	int numero;
+	Nodo *sig;
+	
+}*p, *q,*r, *inicio, *fin;
+
+double promedio=0;
+int cont=0;
+int sum;
+
 int main(int argc, char** argv) {
+	int op;
+do{
+	system("cls");
+	cout<<"\t ***Numeros***";
 	
-		int n=0;
-		cout<<"Escriba el numero de personas que califican el servicio \n";
-		cin>>n;
-	
-		int matriz [4][n];
-		float vector[4];
-		float vector2[4];
-		float vector3[4];
-		int aspecto[4];
-		int variable;
-		int cont=0;
-		
-	for(int i=0; i<4; i++){
-	
-	aspecto[i]=i;
-	}
-	
-		
-		
-		cout<<"escriba sus calificaciones: \n";
-		
-		for (int i = 0; i < 4; i++)
-	{	
-		for (int j = 0; j < n; j++)
-		{	   
-		
-			do{
-				cout<<"lea variable "<<i+1<<""<<j+1<<": \n";
-				cin>>variable;
-			}while((variable<0) || (variable>10));
-		     
-		     matriz[i][j]=variable;
-				
-				
-		}
+cout<<"\n 1. Insertar numero ";
+cout<<"\n 2. Informe";
+cout<<"\n 3. Eliminar";
+cout<<"\n 4. Salir";
 
-    }
-    
-    cout<<"Su matriz es: \n";
-		
-		for (int i = 0; i < 4; i++)
-	{	
-		for (int j = 0; j < n; j++)
-		{	
-				cout<<matriz[i][j];
-		}
-		cout<<"\n";
-    }
-    
-		
-		for (int i = 0; i < 4; i++)
-	{	
-		for (int j = 0; j < n; j++)
-		{	
-			cont=cont+matriz[i][j];
-		}
-		vector[i]=cont;
-		cont=0;
-		
-    }
-	
-	cout<<"Las sumas son: ";
-	for(int i=0; i<4; i++){
-		
-		cout<<"\n";
-		cout<<vector[i];
-	}	
-	
-	cout<<"el promedio de cada servicio es: \n";
-	
-	for(int i=0; i<4; i++){
-	
-	
-		vector2[i]=vector[i]/n;
-	}
-	
-	for(int i=0; i<4; i++){
-	
-	cout<<"\n";
-	 cout<<	vector2[i];
-	}
-		
-	for(int i=0; i<4; i++){
-	
-	vector3[i]=vector2[i];
-	}	
-		
-    cout<<"el promedio de cada servicio ordenado es: \n";
-	
-	
-	float aux=0;
-	int auxA=0;
-
-			
-	for (int i=1; i<4; i++){
-	
-        for(int j=0 ; j<4 - 1; j++){
-		
-              if (vector3[j] > vector3[j+1]){
-			  
-                   aux = vector3[j];
-                  vector3[j] = vector3[j+1];
-                   vector3[j+1] = aux;
-                   
-			}
-		
-		}
-	}
-	
-	int j=0;
-	for(int i=3; i>=0; i--){
-	
-	    cout<<vector3[i];
-	    cout<<endl;
+cout<<"\n\n Escriba una opcion--> ";
+cin>>op;
+ 
+ switch(op){
+ 	case 1:Insertar();
+ 		   system("pause");
+	       break;
+	       
+ 	case 2:Informe();
+ 		   system("pause");
+	 	   break;
+	 	   
+   	case 3:Eliminar();
+ 		   system("pause");
+	 	   break;
 	 
-	}
-	
-	cout<<"orden aspecto";
-	
-	for(int i=0; i<4; i++){
-	  for(int j=0; j<4; j++){	
-		  if(vector3[i]==vector2[j]){
-		  	 aspecto[i]=
-	  }
+	default: cout<<"Opcion no valida";
 	 
-     }
-	 
-	}	
+ }
+}while( op!=4 );
 	return 0;
 }
+
+void Insertar(){
+	system("cls");
+	p = new Nodo;
+	if(p == NULL){
+		cout<<"No hay memoria";
+	}else{
+		do{
+				cout<<"Escriba un Numero (Par) \n";
+				cin>>p->numero;
+		}while(p->numero%2!=0);
+
+		p->sig=NULL;
+		
+		if(inicio==NULL){
+			inicio=p;
+			fin=p;
+			cont=cont+1;
+			promedio=p->numero/cont;
+			
+		}else{
+			q=inicio;
+			while(q!=NULL){
+				sum=sum+q->numero;
+				q=q->sig;
+			}
+			cont=cont+1;
+			promedio=sum/cont;
+				
+			if(promedio < p->numero){
+				p->sig=inicio;
+				inicio=p;
+			
+			}else{
+				fin->sig=p;
+				fin=p;
+			
+			}
+			
+		}
+		
+	}
+}
+
+void Informe(){
+  cout<<" .: Informe de Numeros:. \n\n";
+  if (inicio == NULL){
+  	
+  	cout<<" No hay Numeros \n";
+  	
+  	
+  }else{
+  	
+  	cout<<"Lista de Numeros \n";
+  	q = inicio;
+  	
+  	while (q != NULL){
+  		
+  		cout<<"\n Numero -> ";
+  		cout<<(q->numero);
+  		cout<<"\n";
+  		q = q->sig;
+  		
+	  }
+	  
+	  cout<<"\n La cantidad de datos son: ";
+	  cout<<cont;
+	  cout<<"\n Su promedio fue: ";
+	  cout<<promedio;
+  }
+}
+
+void Eliminar(){
+	system("cls");
+	int dato;
+	char encontro='n';
+		if(inicio==NULL){
+			cout<<"No hay lista";
+		}else{		
+			cout<<"Digite el numero a eliminar--> ";
+			cin>>dato;
+			q=inicio;
+			while((q!=NULL)and(encontro=='n')){
+				if(q->numero==dato){
+					encontro='s';
+				}else{
+					q=q->sig;
+				}
+			}
+			
+			if(encontro=='s'){
+				if(inicio->numero==dato){
+					inicio=inicio->sig;
+					delete(q);
+					cout<<"Se elimino en la cabeza";
+				}else{
+						if(fin->numero==dato){
+							r=inicio;
+							while(r->sig!=fin){
+								r=r->sig;
+							}
+							fin=r;
+							delete(q);
+							cout<<"lo elimino al final";
+						}else{
+							r=inicio;
+							while(r->sig!=q){
+								r=r->sig;
+							}
+							r->sig=q->sig;
+							delete(q);
+							cout<<"lo elimino en medio de";
+						}
+				}
+				
+			
+			}else{
+				cout<<"No se encontro en lista";
+			}
+		
+		
+			
+	}
+}
+
